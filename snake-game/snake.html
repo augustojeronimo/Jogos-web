@@ -7,44 +7,36 @@
     <link rel="stylesheet" href="../styles/default.css">
     <link rel="stylesheet" href="snake.css">
 </head>
-<body onload="game()">
+<body>
 
-    <main id="screen"> <!-- O código do jogo será gerado aqui por JavaScript --> </main>
-
-    <div id="controls">
-        <table>
-            <tr>
-                <td>
-                    <button class="control">
-                        &leftarrow;
-                    </button>
-                </td>
-                <td>
-                    <table>
-                        <tr>
-                            <td>
-                                <button class="control">
-                                    &uparrow;
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button class="control">
-                                    &downarrow;
-                                </button>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td>
-                    <button class="control">
-                        &rightarrow;
-                    </button>
-                </td>
-            </tr>
-        </table>
+    <div id="blur">
+        <menu id="menu">
+            <li id="play">
+                <button id="btn-play" onclick="play()">Jogar</button>
+            </li>
+            <li>
+                <table id="options">
+                    <tr>
+                        <td>
+                            <label for="opt1" onclick="changeOption(this)" class="size-option">9x9</label>
+                        </td>
+                        <td>
+                            <label for="opt2" onclick="changeOption(this)" class="size-option marked">15x15</label>
+                        </td>
+                        <td>
+                            <label for="opt3" onclick="changeOption(this)" class="size-option">21x21</label>
+                        </td>
+                    </tr>
+                </table>
+                <input type="radio" class="opt" id="opt1" name="opt" >
+                <input type="radio" class="opt" id="opt2" name="opt" class="marked" checked>
+                <input type="radio" class="opt" id="opt3" name="opt" >
+            </li>
+        </menu>
     </div>
+
+    <main id="screen"> <!-- Código gerado por JavaScript --> </main>
+
     <script src="snake.js"></script>
 </body>
 </html>

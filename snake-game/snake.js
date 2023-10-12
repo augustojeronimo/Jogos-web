@@ -1,6 +1,5 @@
 var fieldSize;      // Tamanho do campo (1x1)
 var matrizS = [];   // Matriz onde a cobra é marcada
-var matrizBG = [];  //
 var snake = [
     {line: 0, column: 0},
     {line: 0, column: 0},
@@ -37,7 +36,6 @@ function createScreen(size = 9) {
     /* Coreção de tabuleiro em caso de vavlor inválido */
     if (size % 2 == 0 || size < 9) {
         size = 9;
-        size = 9;
     }
     /* Variável global de tamanho do campo recebe o valor recebido por parâmetro */
     fieldSize = size;
@@ -49,7 +47,6 @@ function createScreen(size = 9) {
         section.setAttribute("class", "line");
 
         let lineA = [];
-        let lineB = [];
 
         for (let c = 0; c < size; c++) {
             let div = document.createElement("div");
@@ -58,14 +55,12 @@ function createScreen(size = 9) {
             section.appendChild(div);
 
             lineA.push(0);
-            lineB.push(n);
             n++;
         }
 
         document.getElementById("screen").appendChild(section);
 
         matrizS.push(lineA);
-        matrizBG.push(lineB);
 
     }
 
@@ -145,7 +140,7 @@ function updateScreen() {
     for (let l = 0; l < fieldSize; l++) {
         console.log(matrizS[l]);
     }
-    console.log("----------------------------------------")
+    console.log("----------------------------------------");
 }
 
 function validMove() {
@@ -214,6 +209,7 @@ function moveSnake() {
     /* Se comeu uma fruta, aumenta uma seção na cobra */
     if (cond1 || cond2 || cond3 || cond4) {
         snake.push({line: 0, column: 0});
+        createFruit();
         console.log("fruta!");
     }
 
@@ -258,17 +254,55 @@ function updateMove() {
     for (let s = 0; s < snake.length; s++) {
         
         matrizS[snake[s].line][snake[s].column] = s+1;
+        console.log(s);
         
     }
 
+
+}
+    function createFruit() {
+        
+    }
+
+function game(size) {
+    createScreen(size);
+    createSnake();
+    createFruit();
+    
+    setTimeout(() => {
+        start();
+    }, 1500);
+
 }
 
-function game() {
-    createScreen(11);
-    createSnake();
-    
-    start();
-    
-    
+function play() {
+    let opt = document.querySelector('input[name="opt"]:checked').id;
 
+    document.querySelector("#blur").style.display = "none";
+
+    switch (opt) {
+        case "opt1":
+            game(9);
+            break;
+        case "opt2":
+            game(15);
+            break;
+        case "opt3":
+            game(21);
+            break;
+        default:
+            break;
+    }
+}
+
+/* Menu */
+
+function changeOption(btn) {
+    let btns = document.querySelectorAll(".size-option");
+
+    for (let i = 0; i < btns.length; i++) {
+        btns[i].classList.remove("marked");       
+    }
+
+    btn.classList.add("marked");
 }
