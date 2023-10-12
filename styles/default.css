@@ -1,0 +1,20 @@
+:root {
+    --color-dark: #28004d;
+    --color-mid: #6f4fff;
+    --clor-light: #0099ff;
+
+    --font-default: arial;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+body {
+    background-color: var(--color-dark);
+    width: 100vw;
+    height: 100vh;
+}

@@ -1,0 +1,29 @@
+main {
+    background-color: white;
+    
+    width: 50vw;
+    height: 80vh;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+main button {
+    width: 250px;
+    height: 60px;
+}
+
+
+/* Tela menor */
+@media (max-width: 600px) {
+    main {
+        width: 100vw;
+        height: 100vh;
+    }
+}
