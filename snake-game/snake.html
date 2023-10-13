@@ -9,48 +9,24 @@
 </head>
 <body>
 
+    <!-- Tela do jogo -->
     <main id="screen"> <!-- Código gerado por JavaScript --> </main>
+    
 
     <!-- Controles, visíveis apenas em telas menores -->
-    <div id="controls">
-        <table>
-            <tr>
-                <td>
-                    <button onclick="mobileControl('a')" class="control">
-                        &leftarrow;
-                    </button>
-                </td>
-                <td>
-                    <table>
-                        <tr>
-                            <td>
-                                <button onclick="mobileControl('w')" class="control">
-                                    &uparrow;
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button onclick="mobileControl('s')" class="control">
-                                    &downarrow;
-                                </button>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td>
-                    <button onclick="mobileControl('d')" class="control">
-                        &rightarrow;
-                    </button>
-                </td>
-            </tr>
-        </table>
+    <div id="controls" hidden>
+        <button onclick="mobileControl('a')" class="third control"> &leftarrow; </button>
+        <div class="third col">
+            <button onclick="mobileControl('w')" class="control"> &uparrow; </button>
+            <button onclick="mobileControl('s')" class="control"> &downarrow; </button>
+        </div>
+        <button onclick="mobileControl('d')" class="third control"> &rightarrow; </button>
     </div>
 
     <!-- Desfoque da tela -->
     <div class="blur" id="b1">
         <!-- Menu de início do jogo -->
-        <menu id="menu" class="hidden">
+        <menu id="menu">
             <li id="play">
                 <button id="btn-play" onclick="play()">Jogar</button>
             </li>
