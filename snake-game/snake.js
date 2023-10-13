@@ -183,7 +183,7 @@ function moveSnake() {
     /* Caso tenha batido em uma parede, para o jogo e encerra a função */
     if (cond1 || cond2 || cond3 || cond4) {
         stop();
-        loseGame();
+        console.log("parede!");
         return;
     }
 
@@ -196,7 +196,7 @@ function moveSnake() {
     /* Caso o a cobra avance no próprio corpo, para o jogo e encerra a função */
     if (cond1 || cond2 || cond3 || cond4) {
         stop();
-        loseGame();
+        console.log("corpo!");
         return;
     }
 
@@ -210,7 +210,7 @@ function moveSnake() {
     if (cond1 || cond2 || cond3 || cond4) {
         snake.push({line: 0, column: 0});
         createFruit();
-        
+        console.log("fruta!");
     }
 
     
@@ -272,18 +272,6 @@ function createFruit() {
     }
 }
 
-/* Função de perda do jogo */
-function loseGame() {
-    document.querySelector("#b1").classList.add("visible");
-    document.querySelector("#message").setAttribute("class", "visible");
-
-}
-
-/* Função de vitória no jogo */
-function winGame() {
-    
-}
-
 /* Sequencia seguida para início da partida e loop de jogo */
 function game(size) {
     createScreen(size);
@@ -302,8 +290,6 @@ function play() {
     let opt = document.querySelector('input[name="opt"]:checked').id;
 
     document.querySelector("#b1").classList.add("hidden");
-    document.querySelector("#menu").classList.remove("visible");
-    document.querySelector("#menu").classList.add("hidden");
 
     switch (opt) {
         case "opt1":
