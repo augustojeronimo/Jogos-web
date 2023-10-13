@@ -142,6 +142,8 @@ div#controls {
     transform: translate(-50%, -110%);
 
     background-color: white;
+
+    display: none;
 }
 
 div#controls table {
@@ -164,4 +166,19 @@ button.control {
 
 button.control:hover {
     background-color: #00ff00;
+}
+
+
+@media (max-width: 550px) {
+    div#controls {
+        display: block;
+    }
+
+    #screen {
+        max-width: 300px;
+        max-height: 300px;
+
+        top: 0;
+        transform: translate(-50%, 0%);
+    }
 }
