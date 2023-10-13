@@ -17,6 +17,11 @@ addEventListener("keydown", (e) => {
     validMove();
 })
 
+function mobileControl(direction) {
+    key = direction;
+    validMove();
+}
+
 /* Inicia o loop de jogo */
 function start() {
     /* a cada 300ms move a cobra de acordo com a tecla e atualiza a tela */

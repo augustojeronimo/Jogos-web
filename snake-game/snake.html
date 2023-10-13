@@ -11,6 +11,42 @@
 
     <main id="screen"> <!-- Código gerado por JavaScript --> </main>
 
+    <!-- Controles, visíveis apenas em telas menores -->
+    <div id="controls" class="hidden">
+        <table>
+            <tr>
+                <td>
+                    <button onclick="mobileControl('a')" class="control">
+                        &leftarrow;
+                    </button>
+                </td>
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <button onclick="mobileControl('w')" class="control">
+                                    &uparrow;
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button onclick="mobileControl('s')" class="control">
+                                    &downarrow;
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <button onclick="mobileControl('d')" class="control">
+                        &rightarrow;
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
     <!-- Desfoque da tela -->
     <div class="blur" id="b1">
         <!-- Menu de início do jogo -->
