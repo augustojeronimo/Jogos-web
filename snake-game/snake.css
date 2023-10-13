@@ -1,5 +1,7 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 100vw;
+    height: 100vh;
 }
 
 #screen {
@@ -207,5 +209,24 @@ div.fruit {
         max-width: 70vh;
 
         top: 98vh;
+    }
+
+    #menu {
+        width: 80vw;
+    }
+
+    button#btn-play, #options {
+        max-width: 80vw;
+    }
+
+    .size-option {
+        width: 20vw;
+        height: 20vw;
+    }
+}
+
+@media (max-width: 300px) {
+    .size-option {
+        font-size: 0.9em;
     }
 }
