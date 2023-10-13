@@ -9,12 +9,17 @@
 </head>
 <body>
 
-    <div id="blur">
-        <menu id="menu">
+    <main id="screen"> <!-- Código gerado por JavaScript --> </main>
+
+    <!-- Desfoque da tela -->
+    <div class="blur" id="b1">
+        <!-- Menu de início do jogo -->
+        <menu id="menu" class="hidden">
             <li id="play">
                 <button id="btn-play" onclick="play()">Jogar</button>
             </li>
             <li>
+                <!-- Opções de tamanho do campo -->
                 <table id="options">
                     <tr>
                         <td>
@@ -28,14 +33,17 @@
                         </td>
                     </tr>
                 </table>
+                <!-- Input oculto que captura a opção de tamanho do campo -->
                 <input type="radio" class="opt" id="opt1" name="opt" >
                 <input type="radio" class="opt" id="opt2" name="opt" class="marked" checked>
                 <input type="radio" class="opt" id="opt3" name="opt" >
             </li>
         </menu>
-    </div>
 
-    <main id="screen"> <!-- Código gerado por JavaScript --> </main>
+        <div id="victory" class="">
+            <p>Você venceu</p>
+        </div>
+    </div>
 
     <script src="snake.js"></script>
 </body>

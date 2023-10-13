@@ -1,26 +1,29 @@
-var fieldSize;      // Tamanho do campo (1x1)
-var matrizS = [];   // Matriz onde a cobra é marcada
+var fieldSize;              // Tamanho do campo (1x1)
+var matriz = [];            // Matriz onde a cobra é marcada
 var snake = [
     {line: 0, column: 0},
     {line: 0, column: 0},
     {line: 0, column: 0}
-]; //
-var direction;      // Armazena a direção que o jogador escolheu
-var directionValid = "w"; // Armazena a direção quando ela é possível
+];
+var key;                    // Armazena a chave de tecla pressionada
+var directionValid = "w";   // Armazena a direção quando ela é válida
+var loop;                   // Armazena o loop de jogo
 
-var loop;
+var points = 0;
 
+/* Captura dos evnetos de teclado */
 addEventListener("keydown", (e) => {
-    direction = e.key;
+    key = e.key;
     validMove();
 })
 
 /* Inicia o loop de jogo */
 function start() {
+    /* a cada 300ms move a cobra de acordo com a tecla e atualiza a tela */
     loop = setInterval(() => {
         moveSnake();
         updateScreen();
-    }, 500);
+    }, 300);
 }
 
 /* Para o loop de jogo */
@@ -28,11 +31,8 @@ function stop() {
     clearInterval(loop);
 }
 
-/* Função que cria a tela em html e as matrizes correspondentes no JS */
+/* Função que cria a tela no html e as matrizes correspondentes no JavaScript */
 function createScreen(size = 9) {
-    /* Coreção do tamanho para número inteiro */
-    size = parseInt(size);
-
     /* Coreção de tabuleiro em caso de vavlor inválido */
     if (size % 2 == 0 || size < 9) {
         size = 9;
@@ -40,7 +40,6 @@ function createScreen(size = 9) {
     /* Variável global de tamanho do campo recebe o valor recebido por parâmetro */
     fieldSize = size;
 
-    let n = 0;
     /* Preenchimento das matrizes e criação da tela */
     for (let l = 0; l < size; l++) {
         let section = document.createElement("section");
@@ -55,12 +54,11 @@ function createScreen(size = 9) {
             section.appendChild(div);
 
             lineA.push(0);
-            n++;
         }
 
         document.getElementById("screen").appendChild(section);
 
-        matrizS.push(lineA);
+        matriz.push(lineA);
 
     }
 
@@ -77,7 +75,7 @@ function createScreen(size = 9) {
     
 }
 
-/* Função calcula a posição da cobra na metriz e na tela */
+/* Função que calcula a posição da cobra na matriz */
 function createSnake() {
     let midOfField = parseInt(fieldSize/2); // coluna em que a cobra vai iniciar o jogo (meio do tabuleiro)
 
@@ -100,7 +98,7 @@ function setSnakePosition() {
     
     for (let l = 0; l < snake.length; l++) {
         
-        matrizS[snake[l].line][snake[l].column] = n;
+        matriz[snake[l].line][snake[l].column] = n;
         n++;
         
     }
@@ -119,7 +117,7 @@ function updateScreen() {
             spot.setAttribute("class", "spot");
 
             /* De acordo com o valor da matriz na posição, define a classe correspondente */
-            switch (matrizS[l][c]) {
+            switch (matriz[l][c]) {
                 /* Fruta */
                 case -1:
                     spot.classList.add("fruit")
@@ -136,36 +134,32 @@ function updateScreen() {
 
         }
     }
-
-    for (let l = 0; l < fieldSize; l++) {
-        console.log(matrizS[l]);
-    }
-    console.log("----------------------------------------");
 }
 
+/* Impede que a direção seja contrária ao movimento */
 function validMove() {
     /* Se a tecla apertada foi uma de controle, continua o teste */
-    if ("awsd".includes(direction)) {
+    if ("awsd".includes(key)) {
         /* Para ir em uma direção, não pode estar vindo dela */
-        switch (direction) {
+        switch (key) {
             case "w":
-                if (matrizS[snake[0].line-1][snake[0].column] != 2) {
-                    directionValid = direction;
+                if (matriz[snake[0].line-1][snake[0].column] != 2) {
+                    directionValid = key;
                 }
                 break;
             case "s":
-                if (matrizS[snake[0].line+1][snake[0].column] != 2) {
-                    directionValid = direction;
+                if (matriz[snake[0].line+1][snake[0].column] != 2) {
+                    directionValid = key;
                 }
                 break;
             case "a":
-                if (matrizS[snake[0].line][snake[0].column-1] != 2) {
-                    directionValid = direction;
+                if (matriz[snake[0].line][snake[0].column-1] != 2) {
+                    directionValid = key;
                 }
                 break;
             case "d":
-                if (matrizS[snake[0].line][snake[0].column+1] != 2) {
-                    directionValid = direction;
+                if (matriz[snake[0].line][snake[0].column+1] != 2) {
+                    directionValid = key;
                 }
                 break;
         }
@@ -173,6 +167,7 @@ function validMove() {
 
 }
 
+/* Realiza todos os testes necessários e move a cobra na matriz caso seja possível */
 function moveSnake() {
     /* Todas as possibilidades de bater em uma parede */
     let cond1 = directionValid == "w" && snake[0].line == 0;
@@ -188,10 +183,10 @@ function moveSnake() {
     }
 
     /* Todas as possibilidades de bater em uma parede */
-    cond1 = directionValid == "w" && matrizS[snake[0].line-1][snake[0].column] > 0;
-    cond2 = directionValid == "s" && matrizS[snake[0].line+1][snake[0].column] > 0;
-    cond3 = directionValid == "a" && matrizS[snake[0].line][snake[0].column-1] > 0;
-    cond4 = directionValid == "d" && matrizS[snake[0].line][snake[0].column+1] > 0;
+    cond1 = directionValid == "w" && matriz[snake[0].line-1][snake[0].column] > 0;
+    cond2 = directionValid == "s" && matriz[snake[0].line+1][snake[0].column] > 0;
+    cond3 = directionValid == "a" && matriz[snake[0].line][snake[0].column-1] > 0;
+    cond4 = directionValid == "d" && matriz[snake[0].line][snake[0].column+1] > 0;
 
     /* Caso o a cobra avance no próprio corpo, para o jogo e encerra a função */
     if (cond1 || cond2 || cond3 || cond4) {
@@ -201,10 +196,10 @@ function moveSnake() {
     }
 
     /* Todas as possibilidades de comer uma fruta */
-    cond1 = directionValid == "w" && matrizS[snake[0].line-1][snake[0].column] == -1;
-    cond2 = directionValid == "s" && matrizS[snake[0].line+1][snake[0].column] == -1;
-    cond3 = directionValid == "a" && matrizS[snake[0].line][snake[0].column-1] == -1;
-    cond4 = directionValid == "d" && matrizS[snake[0].line][snake[0].column+1] == -1;
+    cond1 = directionValid == "w" && matriz[snake[0].line-1][snake[0].column] == -1;
+    cond2 = directionValid == "s" && matriz[snake[0].line+1][snake[0].column] == -1;
+    cond3 = directionValid == "a" && matriz[snake[0].line][snake[0].column-1] == -1;
+    cond4 = directionValid == "d" && matriz[snake[0].line][snake[0].column+1] == -1;
 
     /* Se comeu uma fruta, aumenta uma seção na cobra */
     if (cond1 || cond2 || cond3 || cond4) {
@@ -213,7 +208,13 @@ function moveSnake() {
         console.log("fruta!");
     }
 
-    /* move a cabeça da cobra */
+    
+    /* Move o corpo, cada seção tomando o lugar próxima */
+    for (let s = snake.length-1; s > 0; s--) {
+        snake[s].line = snake[s-1].line;
+        snake[s].column = snake[s-1].column;
+    }
+    /* Move a cabeça da cobra */
     switch (directionValid) {
         case "w":
             snake[0].line--;
@@ -228,57 +229,62 @@ function moveSnake() {
             snake[0].column++;
             break;
     }
-    /* move o corpo para acompanhar a cabeça */
-    for (let s = snake.length-1; s < 1; s++) {
-
-        snake[s].line = snake[s-1].line;
-        snake[s].column = snake[s-1].column;
-
-    }
 
     updateMove();
 }
 
+/* Limpa o campo e remarca a cobra na posição atual */
 function updateMove() {
     
     for (let l = 0; l < fieldSize; l++) {
         for (let c = 0; c < fieldSize; c++) {
             
-            if (matrizS[l][c] != -1) {
-                matrizS[l][c] = 0;
+            if (matriz[l][c] != -1) {
+                matriz[l][c] = 0;
             }
             
         }
     }
 
     for (let s = 0; s < snake.length; s++) {
-        
-        matrizS[snake[s].line][snake[s].column] = s+1;
-        console.log(s);
-        
+        matriz[snake[s].line][snake[s].column] = s+1;        
     }
-
 
 }
-    function createFruit() {
-        
-    }
 
+/* Função que cria a fruta em um ponto livre do campo */
+function createFruit() {
+    while (true) {
+        
+        let x = parseInt(Math.random() * fieldSize-1);
+        let y = parseInt(Math.random() * fieldSize-1);
+
+        if (matriz[y][x] == 0) {
+            matriz[y][x] = -1;
+            return;
+        }
+
+    }
+}
+
+/* Sequencia seguida para início da partida e loop de jogo */
 function game(size) {
     createScreen(size);
     createSnake();
     createFruit();
+    updateScreen();
     
     setTimeout(() => {
         start();
     }, 1500);
 
 }
-
+/* Função que starta o jogo */
 function play() {
+    /* Cria o campo de acordo com o tamanho escolhido */
     let opt = document.querySelector('input[name="opt"]:checked').id;
 
-    document.querySelector("#blur").style.display = "none";
+    document.querySelector("#b1").classList.add("hidden");
 
     switch (opt) {
         case "opt1":
@@ -291,6 +297,7 @@ function play() {
             game(21);
             break;
         default:
+            console.error("Erro...");
             break;
     }
 }

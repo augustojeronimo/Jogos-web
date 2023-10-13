@@ -40,7 +40,7 @@ div.fruit {
 
 /* Elementos do menu */
 
-#blur {
+.blur {
     position: absolute;
     z-index: 100;
 
@@ -119,9 +119,13 @@ div.fruit {
 }
 
 .marked {
-    background-color: #00c000;
+    background-color: #00ce00;
 }
 
 .opt {
+    display: none;
+}
+
+.hidden {
     display: none;
 }
