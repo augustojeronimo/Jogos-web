@@ -30,10 +30,10 @@ addEventListener("keydown", (event) => {
 
 /* Inicia o loop de jogo, que move a cobra e atualiza a tela */
 function play() {
-    loop = setInterval(() => {
-        //mover cobra
-        //atualizar tela
-    }, 300);
+    // loop = setInterval(() => {
+    //     //mover cobra
+    //     //atualizar tela
+    // }, 300);
 }
 
 /* Para o loop de jogo */
@@ -56,10 +56,7 @@ function startGame() {
     createFruit();
     updateScreen();
 
-    // loop = setInterval(() => {
-    //     //mover cobra
-    //     updateScreen();
-    // }, 300);
+    play();
     
 }
 
