@@ -24,6 +24,26 @@ body {
     background-color: green;
 }
 
+#screen > section {
+    display: flex;
+}
+
+#screen > section > div {
+    outline: 1px solid black;
+}
+
+div.grass {
+    background-color: green;
+}
+
+div.snake {
+    background-color: brown;
+}
+
+div.fruit {
+    background-color: red;
+}
+
 #menu {
 
 }
