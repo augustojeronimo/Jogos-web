@@ -57,7 +57,6 @@ function startGame() {
     updateScreen();
 
     play();
-    
 }
 
 /* Cria o campo, em matriz e em HTML  */
@@ -102,7 +101,6 @@ function createScreen() {
 
 /* Cria a cobra no centro do campo */
 function createSnake() {
-    
 
     /* Cento do campo (vertical e horizontal) */
     let center = parseInt(fieldSize/2); 
@@ -119,6 +117,17 @@ function createSnake() {
 
 /* Marca a cobra no campo */
 function markSnake() {
+    /* Limpa a posição anterior da cobra */
+    for (let l = 0; l < fieldSize; l++) {
+        for (let c = 0; c < fieldSize; c++) {
+            
+            if (matriz[l][c] > 0) {
+                matriz[l][c] = 0;
+            }
+
+        }
+    }
+
     /* Maraca na matriz os números correspondetes a cada seção da cobra */
     for (let s = 0; s < snake.length; s++) {
         matriz[snake[s].line][snake[s].column] = s+1;
@@ -146,7 +155,7 @@ function updateScreen() {
     
     for (let l = 0; l < fieldSize; l++) {
         for (let c = 0; c < fieldSize; c++) {
-
+            /* Captura o elemento correspondente à posição na matriz */
             let spot = document.querySelector(`#spot${l}-${c}`);
 
             /* Percorre a matriz adicionando as classes aos respectivos elementos HTML */
