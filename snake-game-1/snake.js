@@ -4,14 +4,15 @@ var fieldSize;          // Tamanho do campo
 var matriz;             // Campo
 var snake;              // Cobra
 
-var points = 0;         // Pontos
+var points;             // Pontos
 var pointsGoal;         // Meta de pontos
 
 var key;                // Valor de qualquer tecla pressionada
 var direction;          // Direção capturada por "key"
 
 var loop;               // Loop do jogo
-var finished = false;   // O jogo acabou?
+var finished;           // O jogo acabou?
+var win;                // Houve vitória
 
 
 /* - - - Elementos HTML - - - */
@@ -19,7 +20,7 @@ var finished = false;   // O jogo acabou?
 var screen = document.querySelector('#screen');     // Campo onde o é exibido
 var menu = document.querySelector('#menu');         // Menu de início
 var endGame = document.querySelector('#endGame');   // Tela final
-
+var timer = document.querySelector('#timer');       // Contagem regressiva
 
 /* - - - Funções, onde a mágica acontece - - - */
 
@@ -34,6 +35,7 @@ addEventListener("keydown", (event) => {
 function keyAction() {
     /* Caso seja uma tecla direcional (a, w, s, d ou setas) */
     if ('awsd'.includes(key) || key.includes('Arrow')) {
+        /* Atribui a nova direção de acordo com a tecla e a direção anterior da cobra */
         if ((key == 'w' || key == 'ArrowUp') && snake[0].line <= snake[1].line) {
             direction = '^'; // cima
         } else if ((key == 's' || key == 'ArrowDown') && snake[0].line >= snake[1].line) {
@@ -48,18 +50,46 @@ function keyAction() {
 
 /* Inicia o loop de jogo, que move a cobra e atualiza a tela */
 function play() {
-    direction = '^';
+    /*Contagem regressiva*/
+    let seconds = 3;
 
-    loop = setInterval(() => {
-        moveSnake();
-        updateScreen();
-    }, 300);
+    let timerLoop = setInterval(() => {
+        /* Conta até 0, então para o timer e inicia o loop de jogo */
+        if (seconds > 0) {
+            timer.innerText = seconds;
+        } else {
+            timer.innerText = '';
+            clearInterval(timerLoop);
+
+            /* Loop de jogo que move a cobra e atualiza a tela até que o jogo acabe */
+            loop = setInterval(() => {
+                moveSnake();
+                updateScreen();
+        
+                if (finished) {
+                    pause();
+                }
+            }, 333);
+
+        }
+        seconds--;
+    }, 1000);
+
+    
 }
 
 /* Para o loop de jogo */
 function pause() {
     clearInterval(loop);
     updateScreen();
+}
+
+/* Reseta as variáveis para início de jogo */
+function reset() {
+    finished = false;
+    win = false;
+    points = 0;
+    direction = '^';
 }
 
 /* Configura o tamanho do campo e a meta de pontos, chama a função que inicia o jogo */
@@ -71,6 +101,7 @@ function configureAndStart(size, goal) {
 
 /* Inicia o jogo */
 function startGame() {
+    reset();
     createScreen();
     createSnake();
     createFruit();
@@ -157,7 +188,7 @@ function markSnake() {
 /* Move a cobra de acordo com a direção escolhida */
 function moveSnake() {
     /* Se houve colisão, não move a cobra */
-    if (endCheck()) {
+    if (lose()) {
         pause();
         return;
     }
@@ -195,20 +226,65 @@ function moveSnake() {
 
 /*  Checa a colisão da cobra com o corpo e as paredes, contabiliza os pontos.
     Retorna true se o jogo acabou, seja por derrota ou vitória */
-function endCheck() {
+function lose() {
+    /* Possibilidades de bater em uma parede */
     if (direction == '^' && snake[0].line == 0) {
-        /* Bateu no "teto" */
+        /* Bateu no teto */
         return true;
     } else if (direction == 'v' && snake[0].line == fieldSize-1) {
-        /* Bateu no "chão" */
+        /* Bateu no chão */
         return true;
     } else if (direction == '<' && snake[0].column == 0) {
-        /* Bateu no "chão" */
+        /* Bateu na parede da esquerda */
         return true;
     } else if (direction == '>' && snake[0].column == fieldSize-1) {
-        /* Bateu no "chão" */
+        /* Bateu na parede da direita */
         return true;
     }
+
+    /* proxima posição */
+    let nextPosition;
+
+    switch (direction) {
+        case '^':
+            nextPosition = matriz[snake[0].line-1][snake[0].column]
+            break;
+        case 'v':
+            nextPosition = matriz[snake[0].line+1][snake[0].column]
+            break;
+        case '<':
+            nextPosition = matriz[snake[0].line][snake[0].column-1]
+            break;
+        case '>':
+            nextPosition = matriz[snake[0].line][snake[0].column+1]
+            break;
+        default:
+            console.log('Algo de errado definitivamente não está certo...');
+            break;
+    }
+
+    /* Proxima posição é ocupada pelo corpo da cobra */
+    if (nextPosition > 0) {
+        return true;
+    }
+
+
+    /* Proxima posição é ocupada por uma fruta */
+    if (nextPosition == -1) {
+        /* Adiciona um ponto, uma seção na cobra e cria uma nova fruta */
+        points++;
+        snake.push({line: 0, column:0});
+        createFruit();
+    }
+
+    /* Se atingiu a meta de pontos, declara vitória e jogo finalizado */
+    if (points == pointsGoal) {
+        win = true;
+        finished = true;
+    }
+
+    return false;
+
 }
 
 /* Cria uma fruta em uma posição aleatória do campo */
