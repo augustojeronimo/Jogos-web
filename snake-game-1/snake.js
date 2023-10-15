@@ -26,14 +26,34 @@ var endGame = document.querySelector('#endGame');   // Tela final
 /* Captura do evento de teclado */
 addEventListener("keydown", (event) => {
     key = event.key;
+
+    keyAction();
 });
+
+/* Decide o que fazer de acordo com a tecla pressionada */
+function keyAction() {
+    /* Caso seja uma tecla direcional (a, w, s, d ou setas) */
+    if ('awsd'.includes(key) || key.includes('Arrow')) {
+        if ((key == 'w' || key == 'ArrowUp') && snake[0].line <= snake[1].line) {
+            direction = '^'; // cima
+        } else if ((key == 's' || key == 'ArrowDown') && snake[0].line >= snake[1].line) {
+            direction = 'v'; // baixo
+        } else if ((key == 'a' || key == 'ArrowLeft') && snake[0].column <= snake[1].column) {
+            direction = '<'; // esquerda
+        } else if ((key == 'd' || key == 'ArrowRight') && snake[0].column >= snake[1].column) {
+            direction = '>'; // direito
+        }
+    }
+}
 
 /* Inicia o loop de jogo, que move a cobra e atualiza a tela */
 function play() {
-    // loop = setInterval(() => {
-    //     //mover cobra
-    //     //atualizar tela
-    // }, 300);
+    direction = '^';
+
+    loop = setInterval(() => {
+        moveSnake();
+        updateScreen();
+    }, 300);
 }
 
 /* Para o loop de jogo */
@@ -131,6 +151,63 @@ function markSnake() {
     /* Maraca na matriz os números correspondetes a cada seção da cobra */
     for (let s = 0; s < snake.length; s++) {
         matriz[snake[s].line][snake[s].column] = s+1;
+    }
+}
+
+/* Move a cobra de acordo com a direção escolhida */
+function moveSnake() {
+    /* Se houve colisão, não move a cobra */
+    if (endCheck()) {
+        pause();
+        return;
+    }
+
+    /* Move cada seção da cobra para a proxima posição, a partir do fim */
+    for (let s = snake.length-1; s > 0; s--) {
+        
+        snake[s].line = snake[s-1].line;
+        snake[s].column = snake[s-1].column;
+        
+    }
+
+    /* Move a cabeça da cobra na direção escolhida */
+    switch (direction) {
+        case '^':
+            snake[0].line--;
+            break;
+        case 'v':
+            snake[0].line++;
+            break;
+        case '<':
+            snake[0].column--;
+            break;
+        case '>':
+            snake[0].column++;
+            break;
+        default:
+            console.log('Algo de errado não está certo...');
+            break;
+    }
+
+    /* Marca a alteração na matriz */
+    markSnake();
+}
+
+/*  Checa a colisão da cobra com o corpo e as paredes, contabiliza os pontos.
+    Retorna true se o jogo acabou, seja por derrota ou vitória */
+function endCheck() {
+    if (direction == '^' && snake[0].line == 0) {
+        /* Bateu no "teto" */
+        return true;
+    } else if (direction == 'v' && snake[0].line == fieldSize-1) {
+        /* Bateu no "chão" */
+        return true;
+    } else if (direction == '<' && snake[0].column == 0) {
+        /* Bateu no "chão" */
+        return true;
+    } else if (direction == '>' && snake[0].column == fieldSize-1) {
+        /* Bateu no "chão" */
+        return true;
     }
 }
 
