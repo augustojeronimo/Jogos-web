@@ -4,7 +4,7 @@ var fieldSize;          // Tamanho do campo
 var matriz;             // Campo
 var snake;              // Cobra
 
-var points = 0;             // Pontos
+var points = 0;         // Pontos
 var pointsGoal;         // Meta de pontos
 
 var key;                // Valor de qualquer tecla pressionada
@@ -71,8 +71,13 @@ function play() {
 
     let timerLoop = setInterval(() => {
         /* Conta até 0, então para o timer e inicia o loop de jogo */
-        if (seconds > 0) {
-            timer.innerText = seconds;
+        if (seconds >= 0) {
+            if (seconds > 0) {
+                timer.innerText = seconds;
+            } else {
+                timer.innerText = 'Go!';
+            }
+
         } else {
             timer.innerText = '';
             clearInterval(timerLoop);
@@ -114,6 +119,10 @@ function manageScreen(scr, state) {
     menu.style.display = 'none';
     endGame.style.display = 'none';
 
+    if (scr == null) {
+        return;
+    }
+
     scr.style.display = state;
 
     score.innerText = points;
@@ -135,7 +144,7 @@ function configureAndStart(size, goal) {
 /* Inicia o jogo */
 function startGame() {
     /* Menu desaparecem */
-    manageScreen(menu, 'none')
+    manageScreen(null);
 
     /* Reseta o jogo e cria o ambiente */
     reset();
@@ -361,8 +370,11 @@ function updateScreen() {
                 case 0:
                     spot.setAttribute('class', 'grass');
                     break;
+                case 1:
+                    spot.setAttribute('class', 'snakeHead');
+                    break;
                 default:
-                    spot.setAttribute('class', 'snake');
+                    spot.setAttribute('class', 'snakeBody');
                     break;
             }
             

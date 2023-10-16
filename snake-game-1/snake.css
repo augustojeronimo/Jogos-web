@@ -45,8 +45,12 @@ div.grass {
     background-color: green;
 }
 
-div.snake {
+div.snakeBody {
     background-color: brown;
+}
+
+div.snakeHead {
+    background-color: rgb(114, 30, 30);
 }
 
 div.fruit {
