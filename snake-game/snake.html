@@ -3,54 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jogo da Cobrinha</title>
-    <link rel="stylesheet" href="../styles/default.css">
+    <title> Jogo da Cobrinha </title>
     <link rel="stylesheet" href="snake.css">
 </head>
 <body>
 
     <!-- Tela do jogo -->
     <main id="screen"> <!-- Código gerado por JavaScript --> </main>
-    
 
     <!-- Controles, visíveis apenas em telas menores -->
-    <div id="controls" hidden>
-        <button onclick="mobileControl('a')" class="third control"> &leftarrow; </button>
-        <div class="third col">
-            <button onclick="mobileControl('w')" class="control"> &uparrow; </button>
-            <button onclick="mobileControl('s')" class="control"> &downarrow; </button>
-        </div>
-        <button onclick="mobileControl('d')" class="third control"> &rightarrow; </button>
-    </div>
+    <div id="controls"></div>
 
-    <!-- Desfoque da tela -->
-    <div class="blur" id="b1">
-        <!-- Menu de início do jogo -->
-        <menu id="menu">
-            <li id="play">
-                <button id="btn-play" onclick="play()">Jogar</button>
+    <p id="timer"></p>
+
+    <!-- Telas finais -->
+    <div id="menu">
+        <!-- Menu de início -->
+        <h1>Snake Game</h1>
+        <menu>
+            <li>
+                <button onclick="configureAndStart(9, 15)">9x9</button>
             </li>
             <li>
-                <!-- Opções de tamanho do campo -->
-                <table id="options">
-                    <tr>
-                        <td>
-                            <label for="opt1" onclick="changeOption(this)" class="size-option">9x9</label>
-                        </td>
-                        <td>
-                            <label for="opt2" onclick="changeOption(this)" class="size-option marked">15x15</label>
-                        </td>
-                        <td>
-                            <label for="opt3" onclick="changeOption(this)" class="size-option">21x21</label>
-                        </td>
-                    </tr>
-                </table>
-                <!-- Input oculto que captura a opção de tamanho do campo -->
-                <input type="radio" class="opt" id="opt1" name="opt" >
-                <input type="radio" class="opt" id="opt2" name="opt" class="marked" checked>
-                <input type="radio" class="opt" id="opt3" name="opt" >
+                <button onclick="configureAndStart(13, 20)">13x13</button>
+            </li>
+            <li>
+                <button onclick="configureAndStart(17, 30)">17x17</button>
+            </li>
+            <li>
+                <button onclick="configureAndStart(21, 40)">21x21</button>
+            </li>
+            <li>
+                <button onclick="configureAndStart(25, 50)">25x25</button>
+            </li>
+            <li>
+                <button onclick="configureAndStart(31, 60)">31x31</button>
             </li>
         </menu>
+    </div>
+    <div id="endGame">
+        <!-- Tela de fim de jogo -->
+        <h1 id="message">Game over</h1>
+        <p>Pontuation: <span id="score"></span></p>
+        <div>
+            <button onclick="manageScreen(menu, 'block')">Menu</button>
+            <button onclick="startGame()">Restart</button>    
+        </div>
     </div>
 
     <script src="snake.js"></script>

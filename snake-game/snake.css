@@ -1,30 +1,43 @@
+@font-face {
+    font-family: gameplay;
+    src: url("../fonts/Gameplay.ttf");
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    border: none;
+    box-sizing: border-box;
+
+    font-family: gameplay;
+    color: white;
+}
+
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    width: 100vw;
-    height: 100vh;
+    background-color: cornflowerblue;
 }
 
 #screen {
-    background-color: green;
-
     position: absolute;
+    z-index: 0;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%,-50%);
 
     width: 500px;
     height: 500px;
+
+    background-color: green;
+    
+    outline: 1px solid black;
 }
 
-section.line {
-    width: 100%;
-
+#screen > section {
     display: flex;
 }
 
-div.spot {
-    background-color: blueviolet;
-    height: 100%;
+#screen > section > div {
     outline: 1px solid black;
 }
 
@@ -32,201 +45,121 @@ div.grass {
     background-color: green;
 }
 
-div.snake {
+div.snakeBody {
     background-color: brown;
 }
 
-div.fruit {
-    background-color: blue;
+div.snakeHead {
+    background-color: rgb(114, 30, 30);
 }
 
-/* Elementos do menu */
+div.fruit {
+    background-color: red;
+}
 
-.blur {
+/* ---------- */
+
+#menu {
     position: absolute;
-    z-index: 100;
-
+    z-index: 200;
     width: 100vw;
     height: 100vh;
 
-    background-color: #000a;
-    backdrop-filter: blur(15px);
+    background-color: #00000055;
+    backdrop-filter: blur(10px);
 }
 
-#menu {
-    width: 400px;
-    height: 400px;
+#menu > h1 {
+    font-size: 5em;
+    font-weight: normal;
+    text-align: center;
+    margin-top: 50px;
+}
 
+#menu menu {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%,-50%);
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-#menu > li {
     list-style: none;
+    columns: 3;
+    
+
+    width: 60vw;
+    
 }
 
-#menu > li > button {
-    width: 300px;
+#menu li {
+    width: 80px;
     height: 80px;
-
-    font-size: 2.5em;
-    font-weight: bold;
-
-    color: white;
-    background-color: #00c000;
-
-    border: none;
-    outline: none;
-    border-radius: 3px;
-    padding: 3px;
-}
-
-#options {
-    width: 300px;
-}
-
-#play {
+    margin: auto;
     margin-bottom: 20px;
 }
 
-#btn-play:hover {
-    background-color: #00ff00;
-}
+#menu button {
+    width: 100%;
+    height: 100%;
 
-.size-option {
-    margin: auto;
-    width: 80px;
-    height: 80px;
     border-radius: 2px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
     background-color: green;
-    color: white;
-    font-size: 1.2em;
-    font-weight: bold;
 }
 
-.size-option:hover {
-    background-color: #00ff00;
+#menu button:hover {
+    background-color: #00ac00;
 }
 
-.marked {
-    background-color: #00ce00;
-}
-
-.opt {
+#endGame {
     display: none;
+
+    position: absolute;
+    z-index: 200;
+    width: 100vw;
+    height: 100vh;
+
+    background-color: #00000055;
+    backdrop-filter: blur(5px);
 }
 
-.hidden {
-    display: none;
+#message {
+    text-align: center;
+    margin: 5%;
+    font-size: 5em;
 }
 
-
-/* Controles manuais para telas pequenas */
-@media (max-width: 550px) {
-    div#controls {
-        width: 70vw;
-        height: 20vw;
-
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-    
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        transform: translate(-50%, -110%);
-    }
-
-    div.col {
-        display: flex;
-        flex-direction: column;    
-    }
-
-    div#controls > button.control {
-        width: 32%;
-        height: 100%;
-    }
-
-    div#controls > div.col > button.control {
-        height: 50%;
-    }
-    
-    .third {
-        width: 33%;
-    }
-    
-    button.control {
-        background-color: #00ce00;
-        color: white;
-
-        outline: none;
-        border: 1px solid white;
-
-        padding: 1px;
-        font-size: 2.3em;
-    }
-
-    button.control:hover {
-        background-color: #00ff00;
-    }
-
-    #screen {
-        width: 70vw;
-        height: 70vw;
-
-        top: 10%;
-        transform: translate(-50%, 0%);
-    }
+#endGame > p {
+    text-align: center;
+    font-size: 2em;
 }
 
-@media (max-width: 450px) {
-    #screen {
-        top: 5vh;
-        max-width: 70vh;
-        max-height: 70vh;
-
-        width: 100vw;
-        height: 100vw;
-    }
-
-    div#controls {
-        width: 100vw;
-        height: 20vh;
-
-        
-        max-width: 70vh;
-
-        top: 98vh;
-    }
-
-    #menu {
-        width: 80vw;
-    }
-
-    button#btn-play, #options {
-        max-width: 80vw;
-    }
-
-    .size-option {
-        width: 20vw;
-        height: 20vw;
-    }
+#endGame > div {
+    margin-top: 30vh;
+    display: flex;
+    justify-content: center;
 }
 
-@media (max-width: 300px) {
-    .size-option {
-        font-size: 0.9em;
-    }
+#endGame > div > button {
+    padding: 25px;
+    margin: 10px;
+
+    border-radius: 3px;
+    font-size: 2em;
+    background-color: green;
+}
+
+#endGame > div > button:hover {
+    background-color: #00ac00;
+}
+
+#timer {
+    font-size: 6em;
+
+    animation: .3s;
+
+    position: absolute;
+    z-index: 100;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
 }
