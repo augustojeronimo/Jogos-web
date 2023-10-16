@@ -49,6 +49,19 @@ function keyAction() {
             direction = '>'; // direito
         }
     }
+
+    if (finished) {
+        
+        switch (key) {
+            case 'Escape':
+                manageScreen(menu, 'block');
+                break;
+            case 'Enter':
+                startGame();
+                break;
+        }
+
+    }
 }
 
 /* Inicia o loop de jogo, que move a cobra e atualiza a tela */
@@ -98,6 +111,9 @@ function reset() {
 }
 
 function manageScreen(scr, state) {
+    menu.style.display = 'none';
+    endGame.style.display = 'none';
+
     scr.style.display = state;
 
     score.innerText = points;
@@ -118,9 +134,8 @@ function configureAndStart(size, goal) {
 
 /* Inicia o jogo */
 function startGame() {
-    /* Menus desaparecem */
+    /* Menu desaparecem */
     manageScreen(menu, 'none')
-    manageScreen(endGame, 'none');
 
     /* Reseta o jogo e cria o ambiente */
     reset();
