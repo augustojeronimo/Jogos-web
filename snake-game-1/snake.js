@@ -4,7 +4,7 @@ var fieldSize;          // Tamanho do campo
 var matriz;             // Campo
 var snake;              // Cobra
 
-var points;             // Pontos
+var points = 0;             // Pontos
 var pointsGoal;         // Meta de pontos
 
 var key;                // Valor de qualquer tecla pressionada
@@ -18,9 +18,12 @@ var win;                // Houve vitória
 /* - - - Elementos HTML - - - */
 
 var screen = document.querySelector('#screen');     // Campo onde o é exibido
+var timer = document.querySelector('#timer');       // Contagem regressiva
 var menu = document.querySelector('#menu');         // Menu de início
 var endGame = document.querySelector('#endGame');   // Tela final
-var timer = document.querySelector('#timer');       // Contagem regressiva
+var message = document.querySelector('#message');   // Mensagem de vitória/derrota
+var score = document.querySelector('#score');       // Pontuação
+
 
 /* - - - Funções, onde a mágica acontece - - - */
 
@@ -67,11 +70,13 @@ function play() {
                 updateScreen();
         
                 if (finished) {
+                    manageScreen(endGame, 'block');
                     pause();
                 }
-            }, 333);
+            }, 350);
 
         }
+
         seconds--;
     }, 1000);
 
@@ -92,6 +97,18 @@ function reset() {
     direction = '^';
 }
 
+function manageScreen(scr, state) {
+    scr.style.display = state;
+
+    score.innerText = points;
+
+    if (win) {
+        message.innerText = 'Victory';
+    } else {
+        message.innerText = 'Game over'
+    }
+}
+
 /* Configura o tamanho do campo e a meta de pontos, chama a função que inicia o jogo */
 function configureAndStart(size, goal) {
     fieldSize = size;
@@ -101,6 +118,11 @@ function configureAndStart(size, goal) {
 
 /* Inicia o jogo */
 function startGame() {
+    /* Menus desaparecem */
+    manageScreen(menu, 'none')
+    manageScreen(endGame, 'none');
+
+    /* Reseta o jogo e cria o ambiente */
     reset();
     createScreen();
     createSnake();
@@ -230,15 +252,19 @@ function lose() {
     /* Possibilidades de bater em uma parede */
     if (direction == '^' && snake[0].line == 0) {
         /* Bateu no teto */
+        finished = true;
         return true;
     } else if (direction == 'v' && snake[0].line == fieldSize-1) {
         /* Bateu no chão */
+        finished = true;
         return true;
     } else if (direction == '<' && snake[0].column == 0) {
         /* Bateu na parede da esquerda */
+        finished = true;
         return true;
     } else if (direction == '>' && snake[0].column == fieldSize-1) {
         /* Bateu na parede da direita */
+        finished = true;
         return true;
     }
 
@@ -265,6 +291,7 @@ function lose() {
 
     /* Proxima posição é ocupada pelo corpo da cobra */
     if (nextPosition > 0) {
+        finished = true;
         return true;
     }
 
@@ -328,5 +355,3 @@ function updateScreen() {
     }
 
 }
-
-configureAndStart(9, 5);
