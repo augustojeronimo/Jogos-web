@@ -64,6 +64,11 @@ function keyAction() {
     }
 }
 
+function keyMobile(dir) {
+    key = dir;
+    keyAction();
+}
+
 /* Inicia o loop de jogo, que move a cobra e atualiza a tela */
 function play() {
     /*Contagem regressiva*/
