@@ -173,3 +173,10 @@ div.fruit {
     } */
 
 }
+
+@media (orientation: portrait) {
+    #screen {
+        width: 100vw;
+        height: 100vw;
+    }
+}
