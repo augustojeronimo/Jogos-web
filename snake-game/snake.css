@@ -109,7 +109,7 @@ div.fruit {
     height: 100%;
 }
 
-div#menu > menu > li > button:hover {
+button:hover {
     background-color: #00bb00;
     transform: scale(110%);
 }
@@ -222,8 +222,6 @@ div#menu > menu > li > button:hover {
         }
 
         div#menu > menu > li {
-            background-color: #721e1e;
-
             width: 20vw;
             height: 10vh;
 
