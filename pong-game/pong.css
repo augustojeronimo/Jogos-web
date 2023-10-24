@@ -1,0 +1,31 @@
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    border: none;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #000e00;
+}
+
+main {
+    background-color: white;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
+    width: 100vh;
+    height: 60vh;
+}
+
+main > section {
+    display: flex;
+}
+
+main > section > div {
+    outline: 1px solid black;
+}
