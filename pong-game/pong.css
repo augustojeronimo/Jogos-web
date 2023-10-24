@@ -11,7 +11,7 @@ body {
 }
 
 main {
-    background-color: white;
+    background-color: #a8a8a8;
 
     position: absolute;
     top: 50%;
@@ -28,4 +28,12 @@ main > section {
 
 main > section > div {
     outline: 1px solid black;
+}
+
+div.ball {
+    background-color: black;
+}
+
+div.player {
+    background-color: black;
 }
