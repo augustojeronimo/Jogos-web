@@ -72,8 +72,6 @@ function move(line, column, spot) {
         return;
     }
 
-    spot.setAttribute('class', 'void');
-
     for (let l = line-1; l < line+2; l++) {
         for (let c = column-1; c < column+2; c++) {
             
