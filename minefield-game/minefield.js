@@ -52,9 +52,47 @@ function createField() {
 
 }
 
-/* Jogada, informa as bombas ao redor... ou explode */
-function move(line, column, spot) {
-    console.log(line +' '+column+' '+spot);
+/* Coloca as bombas no campo */
+function plantBombs(rate) {
+    for (let l = 0; l < height; l++) {
+        for (let c = 0; c < width; c++) {
+            
+            matriz[l][c] = Math.random()>rate?1:0;
+            
+        }
+    }
 }
 
-createField();
+/* Jogada, informa as bombas ao redor... ou explode */
+function move(line, column, spot) {
+    let bombs = 0;
+
+    if (matriz[line][column] == 1) {
+        spot.setAttribute('class', 'bomb');
+        return;
+    }
+
+    spot.setAttribute('class', 'void');
+
+    for (let l = line-1; l < line+2; l++) {
+        for (let c = column-1; c < column+2; c++) {
+            
+            if (l >= 0 && l < height && c >= 0 && c < width) {
+                if (matriz[l][c] == 1) {
+                    bombs++;
+                }
+            }
+
+        }
+    }
+
+    spot.innerText = bombs;
+
+}
+
+function start() {
+    createField();
+    plantBombs(0.6);
+}
+
+start();
