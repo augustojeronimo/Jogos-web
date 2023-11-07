@@ -49,7 +49,7 @@ function createField() {
         field.appendChild(line)
     }
 
-
+    configureMark();
 }
 
 /* Coloca as bombas no campo */
@@ -88,9 +88,25 @@ function move(line, column, spot) {
 
 }
 
+function configureMark() {
+    for (let l = 0; l < height; l++) {
+        for (let c = 0; c < width; c++) {
+            
+            let spot = document.querySelector(`#spot${l}-${c}`);
+
+            spot.addEventListener("contextmenu", function(event) {
+                event.defaultPrevented();
+                alert('aaa');
+            });
+
+        }
+    }
+    alert(spot);
+}
+
 function start() {
     createField();
-    plantBombs(0.6);
+    plantBombs(0.7);
 }
 
 start();

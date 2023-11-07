@@ -43,3 +43,7 @@ div.void {
 div.bomb {
     background-color: red;
 }
+
+div.mark {
+    background-color: blue;
+}
